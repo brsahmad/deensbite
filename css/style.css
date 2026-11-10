@@ -1002,6 +1002,9 @@ h2 {
     gap: 7px;
     font-size: 21px;
   }
+  .brand-icon {
+    height: 20px;
+  }
   .brand-mark {
     width: 30px;
     height: 30px;
