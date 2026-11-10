@@ -58,7 +58,7 @@ textarea:focus-visible {
 .site-header {
   width: 100%;
   min-height: 78px;
-  padding: 14px clamp(18px, 6vw, 88px);
+  padding: 32px clamp(18px, 6vw, 88px);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -995,7 +995,7 @@ h2 {
   }
   .site-header {
     min-height: 66px;
-    padding: 10px 16px;
+    padding: 16px 16px;
     gap: 8px;
   }
   .brand {
