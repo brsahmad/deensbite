@@ -78,8 +78,8 @@ textarea:focus-visible {
   letter-spacing: -0.8px;
 }
 .brand-icon {
-  width: 120px;
-  height: 120px;
+  width: auto;
+  height: 32px;
   object-fit: contain;
   display: block;
   flex-shrink: 0;
