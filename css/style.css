@@ -181,7 +181,7 @@ textarea:focus-visible {
   /* border: 1px solid var(--ink); */
   padding: 11px 16px;
   border-radius: 99px;
-  background: var(--pink-dark);
+  background: var(--pink);
   text-decoration: none;
 
   transition: all 0.25s ease;
