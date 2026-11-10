@@ -1029,8 +1029,8 @@ h2 {
     font-size: 10px;
   }
   .header-order span {
-    font-size: 13px;
-    color: var(--pink-dark);
+    font-size: 10px;
+    color: var(--paper);
   }
 
   .hero {
