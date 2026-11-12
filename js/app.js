@@ -140,7 +140,8 @@ document.querySelector("#checkout-start").addEventListener("click", () => {
 
 function updateMethodFields() {
   const method = orderForm.elements.method.value;
-  const needsAddress = method === "COD" || method === "Kurir";
+  // const needsAddress = method === "COD" || method === "Kurir";
+  const needsAddress = method === "Kurir";
   const addressField = document.querySelector("#address-field");
   const addressInput = document.querySelector("#customer-address");
   document.querySelector("#pickup-note").hidden = needsAddress;
