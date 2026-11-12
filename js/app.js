@@ -198,3 +198,55 @@ orderForm.addEventListener("submit", event => {
 
 renderProducts();
 renderCart();
+
+// Hero carousel: hanya mengatur slide di area hero.
+(() => {
+  const carousel = document.querySelector(".hero-carousel");
+  if (!carousel) return;
+
+  const slides = [...carousel.querySelectorAll(".hero-slide")];
+  const dots = [...carousel.querySelectorAll(".hero-dot")];
+  const previousButton = carousel.querySelector(".hero-prev");
+  const nextButton = carousel.querySelector(".hero-next");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let activeIndex = 0;
+  let autoPlayId;
+
+  function showSlide(index) {
+    activeIndex = (index + slides.length) % slides.length;
+    slides.forEach((slide, i) => {
+      const active = i === activeIndex;
+      slide.classList.toggle("is-active", active);
+      slide.setAttribute("aria-hidden", String(!active));
+      if (active) slide.removeAttribute("inert");
+      else slide.setAttribute("inert", "");
+    });
+    dots.forEach((dot, i) => {
+      const active = i === activeIndex;
+      dot.classList.toggle("is-active", active);
+      dot.setAttribute("aria-current", String(active));
+    });
+  }
+
+  function stopAutoPlay() {
+    window.clearInterval(autoPlayId);
+  }
+  function startAutoPlay() {
+    stopAutoPlay();
+    if (!reducedMotion) autoPlayId = window.setInterval(() => showSlide(activeIndex + 1), 5000);
+  }
+
+  previousButton.addEventListener("click", () => { showSlide(activeIndex - 1); startAutoPlay(); });
+  nextButton.addEventListener("click", () => { showSlide(activeIndex + 1); startAutoPlay(); });
+  dots.forEach(dot => dot.addEventListener("click", () => { showSlide(Number(dot.dataset.goTo)); startAutoPlay(); }));
+  carousel.addEventListener("mouseenter", stopAutoPlay);
+  carousel.addEventListener("mouseleave", startAutoPlay);
+  carousel.addEventListener("focusin", stopAutoPlay);
+  carousel.addEventListener("focusout", event => {
+    if (!carousel.contains(event.relatedTarget)) startAutoPlay();
+  });
+  document.addEventListener("visibilitychange", () => document.hidden ? stopAutoPlay() : startAutoPlay());
+
+  showSlide(0);
+  startAutoPlay();
+})();

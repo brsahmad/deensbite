@@ -85,55 +85,139 @@
     </header>
 
     <main>
-      <section class="hero">
-        <div class="hero-copy">
-          <span class="eyebrow"
-            ><span class="eyebrow-dot"></span> DESSERT HOMEMADE</span
-          >
-          <h1>GABIN<br /><span>BAR</span></h1>
-          <!-- <div class="hero-logo">
-            <img
-              src="assets/images/logo brand gabin barpng.png"
-              alt="Gabin Bar by Deensbite"
-            />
-          </div> -->
-          <p>
-            Sweeten your day with our delicious dessert by
-            <strong>dinda_arum</strong>. Temukan rasa favoritmu dan pesan dengan
-            mudah.
-          </p>
-          <a class="primary-btn" href="#menu"
-            >Explore our menu <span>↓</span></a
-          >
-          <!-- <div class="hero-note">
-            <span class="note-spark">✳</span> Made with love, served with joy.
-          </div> -->
-        </div>
-        <div class="hero-art" aria-label="Ilustrasi dessert Deensbite">
-          <div class="dessert-image">
-            <img
-              src="assets/images/Colorful Layered Ice Cream Bar Stack.webp"
-              alt="Deensbite Gabin Bar Ice Cream"
-            />
+      <section
+        class="hero hero-carousel"
+        aria-label="Produk unggulan Deensbite"
+      >
+        <div class="hero-slide is-active" data-slide="0" aria-hidden="false">
+          <div class="hero-copy">
+            <span class="eyebrow"
+              ><span class="eyebrow-dot"></span> SIGNATURE DESSERT</span
+            >
+            <h1>GABIN<br /><span>BAR</span></h1>
+            <p>
+              Sweeten your day with our delicious Gabin Bar Ice Cream. Temukan
+              rasa favoritmu dan pesan dengan mudah.
+            </p>
+            <a class="primary-btn" href="#menu"
+              >Explore our menu <span>↓</span></a
+            >
           </div>
-          <!-- <div class="sun-shape">
-        
-          </div> -->
-          <span class="float-star star-one">✳</span
-          ><span class="float-star star-two">✦</span>
-          <span class="float-word">YUM!</span>
-
-          <!-- <div class="dessert-card">
-            <div class="dessert-emoji">🍦</div>
-
-            <div class="dessert-caption">HAPPINESS<br />IN EVERY BITE</div>
-          </div> -->
-          <div class="sticker sticker-left">so<br />sweet!</div>
-          <div class="sticker sticker-right">made<br />for you ♡</div>
+          <div class="hero-art" aria-label="Gabin Bar Ice Cream Deensbite">
+            <div class="dessert-image">
+              <img
+                src="assets/images/Colorful Layered Ice Cream Bar Stack.webp"
+                alt="Deensbite Gabin Bar Ice Cream"
+              />
+            </div>
+            <span class="float-star star-one">✳</span
+            ><span class="float-star star-two">✦</span>
+            <span class="float-word">YUM!</span>
+            <div class="sticker sticker-left">so<br />sweet!</div>
+            <div class="sticker sticker-right">made<br />for you ♡</div>
+          </div>
         </div>
-        <!-- <div class="hero-bottom">
-          <span>GOOD MOOD, GOOD FOOD.</span><span>SCROLL TO DISCOVER ↓</span>
-        </div> -->
+
+        <div class="hero-slide" data-slide="1" aria-hidden="true" inert>
+          <div class="hero-copy">
+            <span class="eyebrow"
+              ><span class="eyebrow-dot"></span> CREAMY LITTLE TREATS</span
+            >
+            <h1>CHEES<span>CUIT</span></h1>
+            <p>
+              A creamy, cheesy dessert for your happy moments. Satu gigitan
+              kecil yang bikin harimu makin manis.
+            </p>
+            <a class="primary-btn" href="#menu"
+              >Explore our menu <span>↓</span></a
+            >
+          </div>
+          <div class="hero-art" aria-label="Cheesecuit Deensbite">
+            <div class="dessert-image">
+              <img
+                src="assets/images/cheesecuit-hero.webp"
+                alt="Cheesecuit Deensbite"
+              />
+            </div>
+            <span class="float-star star-one">✳</span
+            ><span class="float-star star-two">✦</span>
+            <span class="float-word">CHEESY!</span>
+            <div class="sticker sticker-left">so<br />creamy!</div>
+            <div class="sticker sticker-right">little<br />happiness ♡</div>
+          </div>
+        </div>
+
+        <div class="hero-slide" data-slide="2" aria-hidden="true" inert>
+          <div class="hero-copy">
+            <span class="eyebrow"
+              ><span class="eyebrow-dot"></span> SAVORY FAVORITE</span
+            >
+            <h1>MEATY<br /><span>KEBAB</span></h1>
+            <p>
+              Soft tortilla wrap filled with savory meat and delicious toppings.
+              Pilihan gurih untuk menemani harimu.
+            </p>
+            <a class="primary-btn" href="#menu"
+              >Explore our menu <span>↓</span></a
+            >
+          </div>
+          <div
+            class="hero-art"
+            aria-label="Kebab tortilla isi daging Deensbite"
+          >
+            <div class="dessert-image">
+              <img
+                src="assets/images/kebab-hero.webp"
+                alt="Kebab tortilla berisi daging Deensbite"
+              />
+            </div>
+            <span class="float-star star-one">✳</span
+            ><span class="float-star star-two">✦</span>
+            <span class="float-word">YUMMY!</span>
+            <div class="sticker sticker-left">so<br />savory!</div>
+            <div class="sticker sticker-right">made<br />fresh ♡</div>
+          </div>
+        </div>
+
+        <div class="hero-carousel-controls" aria-label="Kontrol carousel hero">
+          <button
+            class="hero-arrow hero-prev"
+            type="button"
+            aria-label="Slide sebelumnya"
+          >
+            ←
+          </button>
+          <div class="hero-dots">
+            <button
+              class="hero-dot is-active"
+              type="button"
+              data-go-to="0"
+              aria-label="Tampilkan Gabin Bar"
+              aria-current="true"
+            ></button>
+            <button
+              class="hero-dot"
+              type="button"
+              data-go-to="1"
+              aria-label="Tampilkan Cheesecuit"
+              aria-current="false"
+            ></button>
+            <button
+              class="hero-dot"
+              type="button"
+              data-go-to="2"
+              aria-label="Tampilkan Kebab"
+              aria-current="false"
+            ></button>
+          </div>
+          <button
+            class="hero-arrow hero-next"
+            type="button"
+            aria-label="Slide berikutnya"
+          >
+            →
+          </button>
+        </div>
       </section>
 
       <section class="menu-section" id="menu">
