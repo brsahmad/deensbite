@@ -1064,7 +1064,7 @@ h2 {
   .hero-art {
     order: 2;
     height: clamp(260px, 76vw, 330px);
-    margin-top: 4px;
+    margin-top: 24px;
   }
   .sun-shape {
     width: min(260px, 70%);
