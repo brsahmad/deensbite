@@ -66,9 +66,10 @@ function getSubtotal() {
 function renderCart() {
   const entries = getCartEntries();
   const count = entries.reduce((sum, item) => sum + item.quantity, 0);
-  const iceBagPrice = ICE_BAG_PRICES[selectedIceBag];
+
   const selectedIceBag =
     orderForm.querySelector('input[name="icebag"]:checked')?.value || "none";
+  const iceBagPrice = ICE_BAG_PRICES[selectedIceBag];
 
   cartCount.textContent = count;
   cartSubtotal.textContent = rupiah(getSubtotal());
