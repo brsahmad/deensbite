@@ -2,11 +2,19 @@
 // Format internasional tanpa +, spasi, atau tanda hubung. Contoh: 6281234567890
 const WHATSAPP_NUMBER = "6282147396569";
 
-const rupiah = value => new Intl.NumberFormat("id-ID", {
-  style: "currency", currency: "IDR", maximumFractionDigits: 0
-}).format(value);
+const rupiah = (value) =>
+  new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    maximumFractionDigits: 0,
+  }).format(value);
 
 const cart = {};
+const ICE_BAG_PRICES = {
+  none: 0,
+  small: 3500,
+  big: 5000,
+};
 const productGrid = document.querySelector("#product-grid");
 const cartCount = document.querySelector("#cart-count");
 const cartItems = document.querySelector("#cart-items");
@@ -21,7 +29,8 @@ document.querySelector("#year").textContent = new Date().getFullYear();
 // document.querySelector("#menu-count").textContent = `${PRODUCTS.length} sweet treats`;
 
 function renderProducts() {
-  productGrid.innerHTML = PRODUCTS.map(product => `
+  productGrid.innerHTML = PRODUCTS.map(
+    (product) => `
     <article class="product-card ${product.available ? "" : "is-out-of-stock"}">
       <div class="product-visual" style="background:${product.color}">
         <span class="product-tag">${product.available ? product.tag : "HABIS"}</span>
@@ -36,31 +45,45 @@ function renderProducts() {
         </div>
       </div>
     </article>
-  `).join("");
+  `,
+  ).join("");
 }
 
 function getCartEntries() {
-  return PRODUCTS.filter(product => cart[product.id] > 0)
-    .map(product => ({ ...product, quantity: cart[product.id] }));
+  return PRODUCTS.filter((product) => cart[product.id] > 0).map((product) => ({
+    ...product,
+    quantity: cart[product.id],
+  }));
 }
 
 function getSubtotal() {
-  return getCartEntries().reduce((sum, item) => sum + item.price * item.quantity, 0);
+  return getCartEntries().reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0,
+  );
 }
 
 function renderCart() {
   const entries = getCartEntries();
   const count = entries.reduce((sum, item) => sum + item.quantity, 0);
+  const iceBagPrice = ICE_BAG_PRICES[selectedIceBag];
+  const selectedIceBag =
+    orderForm.querySelector('input[name="icebag"]:checked')?.value || "none";
+
   cartCount.textContent = count;
   cartSubtotal.textContent = rupiah(getSubtotal());
-  checkoutSubtotal.textContent = rupiah(getSubtotal());
+  // checkoutSubtotal.textContent = rupiah(getSubtotal());
+  checkoutSubtotal.textContent = rupiah(getSubtotal() + iceBagPrice);
 
   if (!entries.length) {
-    cartItems.innerHTML = '<div class="cart-empty">Your cart is waiting for some sweetness 🍦<br>Yuk pilih dessert favoritmu!</div>';
+    cartItems.innerHTML =
+      '<div class="cart-empty">Your cart is waiting for some sweetness 🍦<br>Yuk pilih dessert favoritmu!</div>';
     return;
   }
 
-  cartItems.innerHTML = entries.map(item => `
+  cartItems.innerHTML = entries
+    .map(
+      (item) => `
     <div class="cart-row">
       <div class="cart-thumb" style="background:${item.color}"><img src="${item.image}" alt="" loading="lazy"></div>
       <div><div class="cart-product-name">${item.name}</div><div class="cart-product-price">${rupiah(item.price)} / item</div></div>
@@ -70,7 +93,9 @@ function renderCart() {
         <button type="button" data-qty="1" data-id="${item.id}" aria-label="Tambah">+</button>
       </div>
     </div>
-  `).join("");
+  `,
+    )
+    .join("");
 }
 
 function showModal(modal) {
@@ -81,7 +106,8 @@ function showModal(modal) {
 function hideModal(modal) {
   modal.classList.remove("is-open");
   modal.setAttribute("aria-hidden", "true");
-  if (!document.querySelector(".modal-backdrop.is-open")) document.body.style.overflow = "";
+  if (!document.querySelector(".modal-backdrop.is-open"))
+    document.body.style.overflow = "";
 }
 function notify(message) {
   toast.textContent = message;
@@ -89,18 +115,18 @@ function notify(message) {
   window.setTimeout(() => toast.classList.remove("show"), 2200);
 }
 
-productGrid.addEventListener("click", event => {
+productGrid.addEventListener("click", (event) => {
   const button = event.target.closest("[data-add]");
   if (!button) return;
   const id = button.dataset.add;
-  const product = PRODUCTS.find(item => item.id === id);
+  const product = PRODUCTS.find((item) => item.id === id);
   if (!product || !product.available) return;
   cart[id] = (cart[id] || 0) + 1;
   renderCart();
   notify("Added to your happy cart! ♡");
 });
 
-cartItems.addEventListener("click", event => {
+cartItems.addEventListener("click", (event) => {
   const button = event.target.closest("[data-qty]");
   if (!button) return;
   const id = button.dataset.id;
@@ -113,15 +139,17 @@ document.querySelector("#cart-open").addEventListener("click", () => {
   renderCart();
   showModal(cartModal);
 });
-document.querySelectorAll("[data-close]").forEach(button => {
-  button.addEventListener("click", () => hideModal(document.getElementById(button.dataset.close)));
+document.querySelectorAll("[data-close]").forEach((button) => {
+  button.addEventListener("click", () =>
+    hideModal(document.getElementById(button.dataset.close)),
+  );
 });
-document.querySelectorAll(".modal-backdrop").forEach(backdrop => {
-  backdrop.addEventListener("click", event => {
+document.querySelectorAll(".modal-backdrop").forEach((backdrop) => {
+  backdrop.addEventListener("click", (event) => {
     if (event.target === backdrop) hideModal(backdrop);
   });
 });
-document.addEventListener("keydown", event => {
+document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
     hideModal(cartModal);
     hideModal(checkoutModal);
@@ -148,12 +176,15 @@ function updateMethodFields() {
   addressField.hidden = !needsAddress;
   addressInput.required = needsAddress;
 }
-orderForm.querySelectorAll('input[name="method"]').forEach(input => {
+orderForm.querySelectorAll('input[name="method"]').forEach((input) => {
   input.addEventListener("change", updateMethodFields);
+});
+orderForm.querySelectorAll('input[name="icebag"]').forEach((input) => {
+  input.addEventListener("change", renderCart);
 });
 updateMethodFields();
 
-orderForm.addEventListener("submit", event => {
+orderForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const entries = getCartEntries();
   if (!entries.length) {
@@ -173,6 +204,15 @@ orderForm.addEventListener("submit", event => {
   const address = String(formData.get("address") || "").trim();
   const note = String(formData.get("note") || "").trim();
 
+  const iceBag = String(formData.get("icebag") || "none");
+  const iceBagPrice = ICE_BAG_PRICES[iceBag];
+
+  const iceBagName = {
+    none: "No Ice Bag",
+    small: "Small Ice Bag",
+    big: "Big Ice Bag",
+  }[iceBag];
+
   const lines = [
     "*PESANAN BARU — DEENSBITE* 🍦",
     "",
@@ -180,16 +220,27 @@ orderForm.addEventListener("submit", event => {
     `Nama: ${name}`,
     `No. WhatsApp: ${phone}`,
     `Metode: ${method}`,
-    ...(method === "Ambil sendiri" ? ["Pengambilan: Lokasi Deensbite (konfirmasi admin)"] : [`Alamat: ${address}`]),
+    ...(method === "Ambil sendiri"
+      ? ["Pengambilan: Lokasi Deensbite (konfirmasi admin)"]
+      : [`Alamat: ${address}`]),
     "",
     "*Detail pesanan*",
-    ...entries.map(item => `• ${item.name} x ${item.quantity} — ${rupiah(item.price * item.quantity)}`),
+    ...entries.map(
+      (item) =>
+        `• ${item.name} x ${item.quantity} — ${rupiah(item.price * item.quantity)}`,
+    ),
     "",
-    `*Subtotal: ${rupiah(getSubtotal())}*`,
+    // `*Subtotal: ${rupiah(getSubtotal())}*`,
+    "",
+    "*Additional Packaging*",
+    `• ${iceBagName} — ${rupiah(iceBagPrice)}`,
+    "",
+    `*Subtotal Produk: ${rupiah(getSubtotal())}*`,
+    `*Total: ${rupiah(getSubtotal() + iceBagPrice)}*`,
     method === "Kurir" ? "Ongkir: Mohon konfirmasi admin." : "",
     note ? `\nCatatan: ${note}` : "",
     "",
-    "Mohon konfirmasi ketersediaan dan total pembayaran. Terima kasih!"
+    "Mohon konfirmasi ketersediaan dan total pembayaran. Terima kasih!",
   ].filter(Boolean);
 
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join("\n"))}`;
@@ -208,7 +259,9 @@ renderCart();
   const dots = [...carousel.querySelectorAll(".hero-dot")];
   const previousButton = carousel.querySelector(".hero-prev");
   const nextButton = carousel.querySelector(".hero-next");
-  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
   let activeIndex = 0;
   let autoPlayId;
 
@@ -233,19 +286,33 @@ renderCart();
   }
   function startAutoPlay() {
     stopAutoPlay();
-    if (!reducedMotion) autoPlayId = window.setInterval(() => showSlide(activeIndex + 1), 5000);
+    if (!reducedMotion)
+      autoPlayId = window.setInterval(() => showSlide(activeIndex + 1), 5000);
   }
 
-  previousButton.addEventListener("click", () => { showSlide(activeIndex - 1); startAutoPlay(); });
-  nextButton.addEventListener("click", () => { showSlide(activeIndex + 1); startAutoPlay(); });
-  dots.forEach(dot => dot.addEventListener("click", () => { showSlide(Number(dot.dataset.goTo)); startAutoPlay(); }));
+  previousButton.addEventListener("click", () => {
+    showSlide(activeIndex - 1);
+    startAutoPlay();
+  });
+  nextButton.addEventListener("click", () => {
+    showSlide(activeIndex + 1);
+    startAutoPlay();
+  });
+  dots.forEach((dot) =>
+    dot.addEventListener("click", () => {
+      showSlide(Number(dot.dataset.goTo));
+      startAutoPlay();
+    }),
+  );
   carousel.addEventListener("mouseenter", stopAutoPlay);
   carousel.addEventListener("mouseleave", startAutoPlay);
   carousel.addEventListener("focusin", stopAutoPlay);
-  carousel.addEventListener("focusout", event => {
+  carousel.addEventListener("focusout", (event) => {
     if (!carousel.contains(event.relatedTarget)) startAutoPlay();
   });
-  document.addEventListener("visibilitychange", () => document.hidden ? stopAutoPlay() : startAutoPlay());
+  document.addEventListener("visibilitychange", () =>
+    document.hidden ? stopAutoPlay() : startAutoPlay(),
+  );
 
   showSlide(0);
   startAutoPlay();
