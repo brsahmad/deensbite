@@ -69,7 +69,7 @@ function renderCart() {
 
   const selectedIceBag =
     orderForm.querySelector('input[name="icebag"]:checked')?.value || "none";
-  const iceBagPrice = ICE_BAG_PRICES[selectedIceBag];
+  const iceBagPrice = ICE_BAG_PRICES[selectedIceBag] ?? 0;
 
   cartCount.textContent = count;
   cartSubtotal.textContent = rupiah(getSubtotal());
